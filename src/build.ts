@@ -1,6 +1,7 @@
 import { toSSG } from 'hono/ssg';
 import fs from 'node:fs/promises';
-import app from './index';
+import { Hono } from 'hono';
+import mainApp from './index';
 import { getIssues } from './lib/github';
 
 async function build() {
@@ -10,10 +11,16 @@ async function build() {
         const articles = await getIssues();
         console.log(`Fetched ${articles.length} articles.`);
 
+        // Create a new parent app to inject middleware BEFORE the main app's routes
+        const app = new Hono();
+
         app.use('*', async (c, next) => {
             c.env = { ARTICLES: articles };
             await next();
         });
+
+        // Mount the main app
+        app.route('/', mainApp);
 
         const result = await toSSG(app, fs, {
             dir: './dist',
