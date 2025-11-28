@@ -8,14 +8,14 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>();
 
-const Layout = (props: { title: string; children: unknown }) => {
+const Layout = (props: { title: string; children: unknown; stylePath?: string }) => {
 	return (
 		<html lang="en">
 			<head>
 				<meta charset="UTF-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<title>{props.title}</title>
-				<link rel="stylesheet" href="/static/styles.css" />
+				<link rel="stylesheet" href={props.stylePath || "./static/styles.css"} />
 			</head>
 			<body class="bg-gray-50 text-gray-900 font-sans antialiased">
 				<header class="bg-white shadow-sm sticky top-0 z-10">
@@ -89,7 +89,7 @@ app.get(
 		}
 
 		return c.html(
-			<Layout title={article.title}>
+			<Layout title={article.title} stylePath="../static/styles.css">
 				<article class="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
 					<header class="mb-8 border-b border-gray-100 pb-8">
 						<h1 class="text-4xl font-extrabold text-gray-900 mb-4">{article.title}</h1>
