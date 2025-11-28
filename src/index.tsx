@@ -19,13 +19,16 @@ const Layout = (props: {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{props.title}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <link
           rel="stylesheet"
           href={props.stylePath || "./static/styles.css"}
         />
       </head>
       <body class="bg-gray-50 text-gray-900 font-sans antialiased min-h-screen flex flex-col">
-        <header class="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 transition-all duration-300">
+        <header class="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 transition-colors duration-300">
           <nav class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <a
               href="./"
@@ -93,7 +96,7 @@ app.get("/", (c) => {
             // Strip HTML tags for excerpt
             const plainText = article.content.replace(/<[^>]+>/g, "");
             return (
-              <article class="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-100 relative overflow-hidden">
+              <article class="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 hover:border-primary-100 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-1 h-full bg-primary-500 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
                 <header class="mb-4">
                   <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
