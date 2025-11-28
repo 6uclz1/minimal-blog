@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { ssgParams } from "hono/ssg";
 import type { Article } from "./types";
 
 type Bindings = {
@@ -72,30 +73,37 @@ app.get("/", (c) => {
 	);
 });
 
-app.get("/posts/:id", (c) => {
-	const id = c.req.param("id");
-	const articles = c.env?.ARTICLES || [];
-	const article = articles.find((a) => a.id === id);
+app.get(
+	"/posts/:id",
+	ssgParams((c) => {
+		const articles = (c.env as Bindings)?.ARTICLES || [];
+		return articles.map((article) => ({ id: article.id }));
+	}),
+	(c) => {
+		const id = c.req.param("id");
+		const articles = c.env?.ARTICLES || [];
+		const article = articles.find((a) => a.id === id);
 
-	if (!article) {
-		return c.notFound();
-	}
+		if (!article) {
+			return c.notFound();
+		}
 
-	return c.html(
-		<Layout title={article.title}>
-			<article>
-				<header>
-					<h1>{article.title}</h1>
-					<small>
-						By {article.author} on{" "}
-						{new Date(article.createdAt).toLocaleDateString()}
-					</small>
-				</header>
-				<div dangerouslySetInnerHTML={{ __html: article.content }} />
-			</article>
-			<a href="../">Back to Home</a>
-		</Layout>,
-	);
-});
+		return c.html(
+			<Layout title={article.title}>
+				<article>
+					<header>
+						<h1>{article.title}</h1>
+						<small>
+							By {article.author} on{" "}
+							{new Date(article.createdAt).toLocaleDateString()}
+						</small>
+					</header>
+					<div dangerouslySetInnerHTML={{ __html: article.content }} />
+				</article>
+				<a href="../">Back to Home</a>
+			</Layout>,
+		);
+	},
+);
 
 export default app;
