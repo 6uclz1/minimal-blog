@@ -15,31 +15,19 @@ const Layout = (props: { title: string; children: unknown }) => {
 				<meta charset="UTF-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<title>{props.title}</title>
-				<link
-					rel="stylesheet"
-					href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
-				/>
-				<style>
-					{`
-            body { padding: 2rem; }
-            header { border-bottom: 1px solid #eee; margin-bottom: 2rem; padding-bottom: 1rem; }
-            article { margin-bottom: 3rem; }
-          `}
-				</style>
+				<link rel="stylesheet" href="/static/styles.css" />
 			</head>
-			<body>
-				<header>
-					<nav>
-						<ul>
-							<li>
-								<strong>
-									<a href="./">Minimal Blog</a>
-								</strong>
-							</li>
-						</ul>
+			<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+				<header class="bg-white shadow-sm sticky top-0 z-10">
+					<nav class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+						<a href="./" class="text-xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors">
+							Minimal Blog
+						</a>
 					</nav>
 				</header>
-				<main class="container">{props.children}</main>
+				<main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+					{props.children}
+				</main>
 			</body>
 		</html>
 	);
@@ -49,26 +37,38 @@ app.get("/", (c) => {
 	const articles = c.env?.ARTICLES || [];
 	return c.html(
 		<Layout title="Minimal Blog">
-			<h1>Recent Posts</h1>
-			{articles.length === 0 ? <p>No posts found.</p> : null}
-			{articles.map((article) => {
-				// Strip HTML tags for excerpt
-				const plainText = article.content.replace(/<[^>]+>/g, "");
-				return (
-					<article>
-						<header>
-							<h2>
-								<a href={`posts/${article.id}`}>{article.title}</a>
-							</h2>
-							<small>
-								By {article.author} on{" "}
-								{new Date(article.createdAt).toLocaleDateString()}
-							</small>
-						</header>
-						<p>{plainText.substring(0, 200)}...</p>
-					</article>
-				);
-			})}
+			<h1 class="text-3xl font-extrabold text-gray-900 mb-8">Recent Posts</h1>
+			{articles.length === 0 ? <p class="text-gray-500">No posts found.</p> : null}
+			<div class="space-y-8">
+				{articles.map((article) => {
+					// Strip HTML tags for excerpt
+					const plainText = article.content.replace(/<[^>]+>/g, "");
+					return (
+						<article class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+							<header class="mb-4">
+								<h2 class="text-2xl font-bold text-gray-900 mb-2">
+									<a href={`posts/${article.id}`} class="hover:text-indigo-600 transition-colors">
+										{article.title}
+									</a>
+								</h2>
+								<div class="text-sm text-gray-500">
+									By <span class="font-medium text-gray-700">{article.author}</span> on{" "}
+									<time datetime={article.createdAt}>
+										{new Date(article.createdAt).toLocaleDateString()}
+									</time>
+								</div>
+							</header>
+							<p class="text-gray-600 leading-relaxed mb-4">
+								{plainText.substring(0, 200)}...
+							</p>
+							<a href={`posts/${article.id}`} class="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium">
+								Read more
+								<svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+							</a>
+						</article>
+					);
+				})}
+			</div>
 		</Layout>,
 	);
 });
@@ -90,17 +90,25 @@ app.get(
 
 		return c.html(
 			<Layout title={article.title}>
-				<article>
-					<header>
-						<h1>{article.title}</h1>
-						<small>
-							By {article.author} on{" "}
-							{new Date(article.createdAt).toLocaleDateString()}
-						</small>
+				<article class="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
+					<header class="mb-8 border-b border-gray-100 pb-8">
+						<h1 class="text-4xl font-extrabold text-gray-900 mb-4">{article.title}</h1>
+						<div class="flex items-center text-sm text-gray-500">
+							<span>By <span class="font-medium text-gray-700">{article.author}</span></span>
+							<span class="mx-2">•</span>
+							<time datetime={article.createdAt}>
+								{new Date(article.createdAt).toLocaleDateString()}
+							</time>
+						</div>
 					</header>
-					<div dangerouslySetInnerHTML={{ __html: article.content }} />
+					<div class="prose prose-indigo max-w-none" dangerouslySetInnerHTML={{ __html: article.content }} />
 				</article>
-				<a href="../">Back to Home</a>
+				<div class="mt-8">
+					<a href="../" class="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium">
+						<svg class="mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+						Back to Home
+					</a>
+				</div>
 			</Layout>,
 		);
 	},
