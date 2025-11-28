@@ -1,14 +1,14 @@
-import { Hono } from 'hono';
-import { html } from 'hono/html';
-import { Article } from './types';
+import { Hono } from "hono";
+import { html } from "hono/html";
+import type { Article } from "./types";
 
 type Bindings = {
-    ARTICLES: Article[];
-}
+	ARTICLES: Article[];
+};
 
 const app = new Hono<{ Bindings: Bindings }>();
 
-const Layout = (props: { title: string; children: any }) => html`
+const Layout = (props: { title: string; children: unknown }) => html`
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -37,46 +37,54 @@ const Layout = (props: { title: string; children: any }) => html`
   </html>
 `;
 
-app.get('/', (c) => {
-    const articles = c.env?.ARTICLES || [];
-    return c.html(
-        <Layout title="Minimal Blog">
-            <h1>Recent Posts</h1>
-            {articles.length === 0 ? <p>No posts found.</p> : null}
-            {articles.map((article) => (
-                <article>
-                    <header>
-                        <h2><a href={`/posts/${article.id}`}>{article.title}</a></h2>
-                        <small>By {article.author} on {new Date(article.createdAt).toLocaleDateString()}</small>
-                    </header>
-                    <p>{article.content.substring(0, 200)}...</p>
-                </article>
-            ))}
-        </Layout>
-    );
+app.get("/", (c) => {
+	const articles = c.env?.ARTICLES || [];
+	return c.html(
+		<Layout title="Minimal Blog">
+			<h1>Recent Posts</h1>
+			{articles.length === 0 ? <p>No posts found.</p> : null}
+			{articles.map((article) => (
+				<article>
+					<header>
+						<h2>
+							<a href={`/posts/${article.id}`}>{article.title}</a>
+						</h2>
+						<small>
+							By {article.author} on{" "}
+							{new Date(article.createdAt).toLocaleDateString()}
+						</small>
+					</header>
+					<p>{article.content.substring(0, 200)}...</p>
+				</article>
+			))}
+		</Layout>,
+	);
 });
 
-app.get('/posts/:id', (c) => {
-    const id = c.req.param('id');
-    const articles = c.env?.ARTICLES || [];
-    const article = articles.find((a) => a.id === id);
+app.get("/posts/:id", (c) => {
+	const id = c.req.param("id");
+	const articles = c.env?.ARTICLES || [];
+	const article = articles.find((a) => a.id === id);
 
-    if (!article) {
-        return c.notFound();
-    }
+	if (!article) {
+		return c.notFound();
+	}
 
-    return c.html(
-        <Layout title={article.title}>
-            <article>
-                <header>
-                    <h1>{article.title}</h1>
-                    <small>By {article.author} on {new Date(article.createdAt).toLocaleDateString()}</small>
-                </header>
-                <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
-            </article>
-            <a href="/">Back to Home</a>
-        </Layout>
-    );
+	return c.html(
+		<Layout title={article.title}>
+			<article>
+				<header>
+					<h1>{article.title}</h1>
+					<small>
+						By {article.author} on{" "}
+						{new Date(article.createdAt).toLocaleDateString()}
+					</small>
+				</header>
+				<div dangerouslySetInnerHTML={{ __html: article.content }}></div>
+			</article>
+			<a href="/">Back to Home</a>
+		</Layout>,
+	);
 });
 
 export default app;
