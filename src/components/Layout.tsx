@@ -14,7 +14,7 @@ export const Layout = (props: {
           href={props.stylePath || "./static/styles.css"}
         />
       </head>
-      <body class="bg-gray-50 text-gray-900 font-sans antialiased min-h-screen flex flex-col">
+      <body class="bg-black text-white font-sans antialiased min-h-screen flex flex-col">
         {props.children}
       </body>
     </html>

@@ -4,8 +4,8 @@ export const ArticleList = (props: { articles: Article[] }) => {
   return (
     <>
       {props.articles.length === 0 ? (
-        <div class="text-center py-12 bg-white rounded-2xl shadow-sm border border-gray-100">
-          <p class="text-gray-500 text-lg">No posts found.</p>
+        <div class="text-center py-12 bg-gray-900 rounded-2xl shadow-sm border border-gray-800">
+          <p class="text-gray-400 text-lg">No posts found.</p>
         </div>
       ) : null}
       <div class="space-y-8">
@@ -16,15 +16,15 @@ export const ArticleList = (props: { articles: Article[] }) => {
             <article class="group relative overflow-hidden">
               <a
                 href={`/minimal-blog/article/${article.id}`}
-                class="block bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-gray-100 hover:border-primary-100"
+                class="block bg-gray-900 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-gray-800 hover:border-primary-500"
               >
-                <h2 class="text-2xl font-bold text-gray-900 mb-3">
+                <h2 class="text-2xl font-bold text-white mb-3">
                   {article.title}
                 </h2>
-                <p class="text-gray-600 leading-relaxed mb-6 line-clamp-3">
+                <p class="text-gray-300 leading-relaxed mb-6 line-clamp-3">
                   {plainText.substring(0, 200)}...
                 </p>
-                <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-3">
                   <time datetime={article.createdAt}>
                     {new Date(article.createdAt).toLocaleDateString(undefined, {
                       year: "numeric",
