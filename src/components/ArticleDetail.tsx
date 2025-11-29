@@ -34,10 +34,10 @@ export const ArticleDetail = (props: { article: Article }) => {
       </article>
 
       {/* Back Button */}
-      <div class="mt-6 flex justify-center">
+      <div class="flex justify-center py-8">
         <a
           href="/minimal-blog/"
-          class="flex h-12 w-24 cursor-pointer items-center justify-center rounded-[5px] text-xs duration-300 border border-[#222] bg-black hover:border-[#0070f3]"
+          class="rounded-md border border-[#222] px-12 py-2 hover:border-[#0070f3]"
         >
           戻る
         </a>
