@@ -1,4 +1,3 @@
-import { html } from "hono/html";
 import type { Article } from "../types";
 
 export const ArticleDetail = (props: { article: Article }) => {

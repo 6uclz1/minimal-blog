@@ -1,4 +1,3 @@
-import { html } from "hono/html";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
