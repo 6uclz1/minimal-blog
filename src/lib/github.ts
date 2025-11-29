@@ -9,6 +9,9 @@ export const getIssues = async (): Promise<Article[]> => {
     throw new Error("GITHUB_REPOSITORY environment variable is not set");
   }
 
+  // Extract the owner from the repository string
+  const owner = repo.split("/")[0];
+
   const headers: HeadersInit = {
     Accept: "application/vnd.github.v3+json",
     "User-Agent": "Hono-Blog-Generator",
@@ -21,6 +24,7 @@ export const getIssues = async (): Promise<Article[]> => {
   const url = `https://api.github.com/repos/${repo}/issues?state=open&per_page=100`;
 
   console.log(`Fetching issues from ${url}`);
+  console.log(`Filtering issues by owner: ${owner}`);
 
   const response = await fetch(url, { headers });
 
@@ -32,10 +36,10 @@ export const getIssues = async (): Promise<Article[]> => {
 
   const issues: GitHubIssue[] = await response.json();
 
-  // Filter out pull requests (issues that have pull_request property)
+  // Filter out pull requests and issues not created by the repository owner
   const articles = await Promise.all(
     issues
-      .filter((issue) => !issue.pull_request)
+      .filter((issue) => !issue.pull_request && issue.user.login === owner)
       .map(async (issue) => {
         const content = await marked(issue.body || "");
         return {

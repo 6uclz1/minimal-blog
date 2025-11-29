@@ -1,11 +1,11 @@
 import { Hono } from "hono";
 import { ssgParams } from "hono/ssg";
-import type { Article } from "./types";
-import { Layout } from "./components/Layout";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
-import { ArticleList } from "./components/ArticleList";
 import { ArticleDetail } from "./components/ArticleDetail";
+import { ArticleList } from "./components/ArticleList";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
+import { Layout } from "./components/Layout";
+import type { Article } from "./types";
 
 type Bindings = {
   ARTICLES: Article[];
