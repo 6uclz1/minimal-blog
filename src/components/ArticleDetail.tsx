@@ -34,9 +34,9 @@ export const ArticleDetail = (props: { article: Article }) => {
       </article>
 
       {/* Back Button */}
-      <div class="mt-6">
+      <div class="mt-6 p-8 border border-gray-800">
         <a
-          href="/"
+          href="/minimal-blog/"
           class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-200"
         >
           戻る
