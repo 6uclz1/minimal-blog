@@ -16,7 +16,11 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.get("/", (c) => {
   const articles = c.env?.ARTICLES || [];
   return c.html(
-    <Layout title="Minimal Blog">
+    <Layout
+      title="Blog"
+      description="A minimal blog built with Hono and Tailwind CSS"
+      url="https://6uclz1.github.io/minimal-blog/"
+    >
       <Header />
       <main class="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <ArticleList articles={articles} />
@@ -42,7 +46,13 @@ app.get(
     }
 
     return c.html(
-      <Layout title={article.title} stylePath="../static/styles.css">
+      <Layout
+        title={article.title}
+        stylePath="../static/styles.css"
+        description={article.content.replace(/<[^>]*>?/gm, "").slice(0, 150) + "..."}
+        url={`https://example.com/article/${article.id}`}
+        type="article"
+      >
         <Header />
         <main class="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <ArticleDetail article={article} />
