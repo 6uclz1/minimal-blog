@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import { ssgParams } from "hono/ssg";
 import type { Article } from "./types";
 import { Layout } from "./components/Layout";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 import { ArticleList } from "./components/ArticleList";
 import { ArticleDetail } from "./components/ArticleDetail";
 
@@ -15,7 +17,9 @@ app.get("/", (c) => {
   const articles = c.env?.ARTICLES || [];
   return c.html(
     <Layout title="Minimal Blog">
+      <Header />
       <ArticleList articles={articles} />
+      <Footer />
     </Layout>,
   );
 });
@@ -37,7 +41,9 @@ app.get(
 
     return c.html(
       <Layout title={article.title} stylePath="../static/styles.css">
+        <Header />
         <ArticleDetail article={article} />
+        <Footer />
       </Layout>,
     );
   },

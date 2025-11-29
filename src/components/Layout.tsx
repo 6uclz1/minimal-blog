@@ -1,6 +1,3 @@
-import { Header } from "./Header";
-import { Footer } from "./Footer";
-
 export const Layout = (props: {
   title: string;
   children: unknown;
@@ -28,11 +25,7 @@ export const Layout = (props: {
         />
       </head>
       <body class="bg-gray-50 text-gray-900 font-sans antialiased min-h-screen flex flex-col">
-        <Header />
-        <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-          {props.children}
-        </main>
-        <Footer />
+        {props.children}
       </body>
     </html>
   );

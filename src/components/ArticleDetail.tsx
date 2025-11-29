@@ -5,33 +5,6 @@ export const ArticleDetail = (props: { article: Article }) => {
   return (
     <>
       <article class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100">
-        <header class="mb-10 text-center">
-          <div class="flex items-center justify-center gap-2 text-sm text-gray-500 mb-6">
-            <span class="font-medium text-primary-600 bg-primary-50 px-3 py-1 rounded-full">
-              Article
-            </span>
-            <span>•</span>
-            <time datetime={article.createdAt}>
-              {new Date(article.createdAt).toLocaleDateString(undefined, {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
-          </div>
-          <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">
-            {article.title}
-          </h1>
-          <div class="flex items-center justify-center gap-3 text-sm text-gray-500">
-            <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-sm font-bold text-gray-500">
-              {article.author.charAt(0).toUpperCase()}
-            </div>
-            <div class="text-left">
-              <p class="text-gray-900 font-semibold">{article.author}</p>
-              <p class="text-gray-500 text-xs">Author</p>
-            </div>
-          </div>
-        </header>
         <div
           class="prose prose-lg prose-indigo max-w-none prose-headings:font-bold prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"
           dangerouslySetInnerHTML={{ __html: article.content }}
