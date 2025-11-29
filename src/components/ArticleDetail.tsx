@@ -37,7 +37,7 @@ export const ArticleDetail = (props: { article: Article }) => {
       <div class="mt-6 flex justify-center">
         <a
           href="/minimal-blog/"
-          class="max-w-xs w-full p-8 border border-gray-800 rounded-lg text-center flex items-center justify-center gap-2 text-gray-400 hover:text-white transition-colors duration-200"
+          class="flex h-12 w-24 cursor-pointer items-center justify-center rounded-[5px] text-xs duration-300 border border-[#222] bg-black hover:border-[#0070f3]"
         >
           戻る
         </a>
