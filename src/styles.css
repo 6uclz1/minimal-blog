@@ -30,7 +30,7 @@
   --color-gray-950: #0a0a0a;
 }
 
-@layer components {
+@layer utilities {
   .prose {
     --tw-prose-body: var(--color-white);
     --tw-prose-headings: var(--color-white);
