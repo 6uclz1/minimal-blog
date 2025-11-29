@@ -18,7 +18,9 @@ app.get("/", (c) => {
   return c.html(
     <Layout title="Minimal Blog">
       <Header />
-      <ArticleList articles={articles} />
+      <main class="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <ArticleList articles={articles} />
+      </main>
       <Footer />
     </Layout>,
   );
@@ -42,7 +44,9 @@ app.get(
     return c.html(
       <Layout title={article.title} stylePath="../static/styles.css">
         <Header />
-        <ArticleDetail article={article} />
+        <main class="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <ArticleDetail article={article} />
+        </main>
         <Footer />
       </Layout>,
     );

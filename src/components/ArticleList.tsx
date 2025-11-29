@@ -2,7 +2,7 @@ import type { Article } from "../types";
 
 export const ArticleList = (props: { articles: Article[] }) => {
   return (
-    <div class="max-w-3xl mx-auto">
+    <>
       {props.articles.length === 0 ? (
         <div class="text-center py-12 bg-white rounded-2xl shadow-sm border border-gray-100">
           <p class="text-gray-500 text-lg">No posts found.</p>
@@ -38,6 +38,6 @@ export const ArticleList = (props: { articles: Article[] }) => {
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
