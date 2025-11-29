@@ -1,3 +1,4 @@
+import { raw } from "hono/html";
 import type { Article } from "../types";
 
 export const ArticleDetail = (props: { article: Article }) => {
@@ -40,8 +41,9 @@ export const ArticleDetail = (props: { article: Article }) => {
         {/* Article Content */}
         <div
           class="prose max-w-none prose-headings:font-bold prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"
-          innerHTML={article.content}
-        />
+        >
+          {raw(article.content)}
+        </div>
       </article>
 
       {/* Back Button */}
