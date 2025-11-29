@@ -1,5 +1,6 @@
 import { raw } from "hono/html";
 import type { Article } from "../types";
+import { sanitizeContent } from "../lib/sanitize";
 
 export const ArticleDetail = (props: { article: Article }) => {
   const { article } = props;
@@ -31,7 +32,7 @@ export const ArticleDetail = (props: { article: Article }) => {
         <div
           class="prose max-w-none prose-headings:font-bold prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"
         >
-          {raw(article.content)}
+          {raw(sanitizeContent(article.content))}
         </div>
       </article>
 
