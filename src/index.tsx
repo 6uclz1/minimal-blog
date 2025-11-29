@@ -16,7 +16,7 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.get("/", (c) => {
   const articles = c.env?.ARTICLES || [];
   return c.html(
-    <Layout title="Blog">
+    <Layout title="Minimal Blog">
       <Header />
       <ArticleList articles={articles} />
       <Footer />
