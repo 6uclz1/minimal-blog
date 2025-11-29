@@ -10,14 +10,6 @@ export const ArticleDetail = (props: { article: Article }) => {
           dangerouslySetInnerHTML={{ __html: article.content }}
         />
       </article>
-      <div class="max-w-3xl mx-auto mt-12 mb-8">
-        <a
-          href="../"
-          class="inline-flex items-center text-gray-600 hover:text-primary-600 font-medium"
-        >
-          Back to Home
-        </a>
-      </div>
     </>
   );
 };

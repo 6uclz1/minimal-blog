@@ -13,19 +13,27 @@ export const ArticleList = (props: { articles: Article[] }) => {
           // Strip HTML tags for excerpt
           const plainText = article.content.replace(/<[^>]+>/g, "");
           return (
-            <article class="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-gray-100 hover:border-primary-100 relative overflow-hidden">
-              <p class="text-gray-600 leading-relaxed mb-6 line-clamp-3">
-                {plainText.substring(0, 200)}...
-              </p>
-              <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                <time datetime={article.createdAt}>
-                  {new Date(article.createdAt).toLocaleDateString(undefined, {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </time>
-              </div>
+            <article class="group relative overflow-hidden">
+              <a
+                href={`/article/${article.id}`}
+                class="block bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-gray-100 hover:border-primary-100"
+              >
+                <h2 class="text-2xl font-bold text-gray-900 mb-3">
+                  {article.title}
+                </h2>
+                <p class="text-gray-600 leading-relaxed mb-6 line-clamp-3">
+                  {plainText.substring(0, 200)}...
+                </p>
+                <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                  <time datetime={article.createdAt}>
+                    {new Date(article.createdAt).toLocaleDateString(undefined, {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </time>
+                </div>
+              </a>
             </article>
           );
         })}

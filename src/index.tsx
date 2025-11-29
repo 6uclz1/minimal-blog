@@ -25,7 +25,7 @@ app.get("/", (c) => {
 });
 
 app.get(
-  "/posts/:id",
+  "/article/:id",
   ssgParams((c) => {
     const articles = (c.env as Bindings)?.ARTICLES || [];
     return articles.map((article) => ({ id: article.id }));
