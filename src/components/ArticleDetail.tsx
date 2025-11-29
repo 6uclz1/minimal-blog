@@ -13,24 +13,8 @@ export const ArticleDetail = (props: { article: Article }) => {
       <div class="max-w-3xl mx-auto mt-12 mb-8">
         <a
           href="../"
-          class="inline-flex items-center text-gray-600 hover:text-primary-600 font-medium transition-colors group"
+          class="inline-flex items-center text-gray-600 hover:text-primary-600 font-medium"
         >
-          <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center mr-3 group-hover:border-primary-200 group-hover:bg-primary-50 transition-all">
-            <svg
-              class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
-            </svg>
-          </div>
           Back to Home
         </a>
       </div>
