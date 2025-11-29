@@ -29,16 +29,10 @@ export const ArticleDetail = (props: { article: Article }) => {
 
         {/* Article Content */}
         <div
-<<<<<<< HEAD
           class="prose max-w-none prose-headings:font-bold prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"
         >
           {raw(article.content)}
         </div>
-=======
-          class="prose prose-lg max-w-none prose-headings:font-bold prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"
-          dangerouslySetInnerHTML={{ __html: article.content }}
-        />
->>>>>>> parent of 5e89ba8 (feat: Sanitize article content with DOMPurify to prevent XSS vulnerabilities.)
       </article>
 
       {/* Back Button */}
