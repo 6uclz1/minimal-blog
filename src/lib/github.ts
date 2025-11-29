@@ -1,4 +1,3 @@
-import DOMPurify from "isomorphic-dompurify";
 import { marked } from "marked";
 import type { Article, GitHubIssue } from "../types";
 
@@ -42,14 +41,11 @@ export const getIssues = async (): Promise<Article[]> => {
     issues
       .filter((issue) => !issue.pull_request && issue.user.login === owner)
       .map(async (issue) => {
-        // Convert Markdown to HTML
-        const html = await marked(issue.body || "");
-        // Sanitize HTML to prevent XSS attacks
-        const sanitizedContent = DOMPurify.sanitize(html);
+        const content = await marked(issue.body || "");
         return {
           id: String(issue.number),
           title: issue.title,
-          content: sanitizedContent,
+          content,
           createdAt: issue.created_at,
           author: issue.user.login,
         };
