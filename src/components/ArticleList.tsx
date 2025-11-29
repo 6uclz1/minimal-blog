@@ -15,7 +15,7 @@ export const ArticleList = (props: { articles: Article[] }) => {
           return (
             <article class="group relative overflow-hidden">
               <a
-                href={`/article/${article.id}`}
+                href={`/minimal-blog/article/${article.id}`}
                 class="block bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow border border-gray-100 hover:border-primary-100"
               >
                 <h2 class="text-2xl font-bold text-gray-900 mb-3">
