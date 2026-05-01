@@ -12,6 +12,8 @@
   --readable-surface: rgba(var(--bg-rgb) / 0.9);
   --readable-border: rgba(var(--fg-rgb) / 0.1);
   --readable-shadow: 0 1.1rem 3rem rgba(var(--fg-rgb) / 0.08);
+  --readable-text-surface: rgba(var(--bg-rgb) / 0.96);
+  --readable-text-border: rgba(var(--fg-rgb) / 0.08);
   --content-inline: 3rem;
   --content-max: 52rem;
   --copy-max: 40rem;
@@ -41,6 +43,8 @@
   --readable-surface: rgba(var(--bg-rgb) / 0.78);
   --readable-border: rgba(var(--fg-rgb) / 0.12);
   --readable-shadow: 0 1.1rem 3rem rgba(0 0 0 / 0.34);
+  --readable-text-surface: rgba(var(--bg-rgb) / 0.88);
+  --readable-text-border: rgba(var(--fg-rgb) / 0.12);
 }
 
 * {
@@ -359,6 +363,23 @@ a {
   margin: 0;
 }
 
+.page-heading > *,
+.post-page__header h1,
+.post-page__header p,
+.post-page__header .tag-list,
+.post-body > :where(p, h2, h3, h4, h5, h6, ul, ol, table) {
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--readable-text-border);
+  border-radius: 0.35rem;
+  background: var(--readable-text-surface);
+  padding: 0.26rem 0.42rem;
+}
+
+.post-body > :where(ul, ol) {
+  padding-left: 1.72rem;
+}
+
 .post-body h2,
 .post-body h3 {
   margin-top: 0.8rem;
@@ -380,7 +401,7 @@ a {
 .post-body ol {
   display: grid;
   gap: 0.4rem;
-  padding-left: 1.3rem;
+  padding-left: 1.72rem;
 }
 
 .post-body blockquote,

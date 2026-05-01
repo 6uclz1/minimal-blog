@@ -63,6 +63,10 @@ describe("buildSite", () => {
     expect(styles).toContain(".noise-field");
     expect(styles).toContain(".page-heading {");
     expect(styles).toContain("background: var(--readable-surface)");
+    expect(styles).toContain("--readable-text-surface");
+    expect(styles).toContain(".post-page__header h1,");
     expect(styles).toContain(".post-body {");
+    expect(styles).toContain(".post-body > :where(");
+    expect(styles).toContain("background: var(--readable-text-surface)");
   });
 });
