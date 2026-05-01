@@ -4,6 +4,7 @@ export type SiteConfig = {
   url: string;
   basePath: string;
   author: string;
+  defaultOgImage: string;
 };
 
 export const siteConfig: SiteConfig = {
@@ -13,4 +14,5 @@ export const siteConfig: SiteConfig = {
   url: "https://6uclz1.github.io/minimal-blog",
   basePath: "/minimal-blog",
   author: "6uclz1",
+  defaultOgImage: "/og-default.png",
 };

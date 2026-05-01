@@ -6,6 +6,7 @@ import { listTags } from "../../content/usecases/listTags";
 import { Layout } from "../../presentation/components/Layout";
 import { NotFoundPage } from "../../presentation/pages/NotFoundPage";
 import { TagPage } from "../../presentation/pages/TagPage";
+import { createMetadata } from "../../seo/metadata";
 
 type RouteOptions = {
   contentIndex: ContentIndex;
@@ -31,7 +32,13 @@ export const registerTagRoute = (app: Hono, options: RouteOptions): void => {
       }
 
       return c.html(
-        <Layout siteConfig={options.siteConfig} title={`Tag: ${tag.name}`}>
+        <Layout
+          metadata={createMetadata(options.siteConfig, {
+            path: `/tags/${tag.slug}/`,
+            title: `Tag: ${tag.name}`,
+          })}
+          siteConfig={options.siteConfig}
+        >
           <TagPage siteConfig={options.siteConfig} tag={tag} />
         </Layout>,
       );

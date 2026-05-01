@@ -28,6 +28,9 @@ describe("buildSite", () => {
     expect(await exists(path.join(distDir, "archive", "index.html"))).toBe(
       true,
     );
+    expect(await exists(path.join(distDir, "feed.xml"))).toBe(true);
+    expect(await exists(path.join(distDir, "sitemap.xml"))).toBe(true);
+    expect(await exists(path.join(distDir, "search-index.json"))).toBe(true);
     expect(await exists(path.join(distDir, "static", "styles.css"))).toBe(true);
   });
 });

@@ -4,6 +4,7 @@ import type { ContentIndex } from "../../content/usecases/buildContentIndex";
 import { listArchiveMonths } from "../../content/usecases/listArchiveMonths";
 import { Layout } from "../../presentation/components/Layout";
 import { ArchivePage } from "../../presentation/pages/ArchivePage";
+import { createMetadata } from "../../seo/metadata";
 
 type RouteOptions = {
   contentIndex: ContentIndex;
@@ -16,7 +17,13 @@ export const registerArchiveRoute = (
 ): void => {
   app.get("/archive/", (c) =>
     c.html(
-      <Layout siteConfig={options.siteConfig} title="Archive">
+      <Layout
+        metadata={createMetadata(options.siteConfig, {
+          path: "/archive/",
+          title: "Archive",
+        })}
+        siteConfig={options.siteConfig}
+      >
         <ArchivePage
           archiveMonths={listArchiveMonths(options.contentIndex)}
           siteConfig={options.siteConfig}
