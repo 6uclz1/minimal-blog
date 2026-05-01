@@ -2,13 +2,18 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { cleanDist } from "./cleanDist";
 import { copyPublicAssets } from "./copyPublicAssets";
-import { createBuildContext } from "./createBuildContext";
+import {
+  type CreateBuildContextOptions,
+  createBuildContext,
+} from "./createBuildContext";
 import { generateStaticSite } from "./generateStaticSite";
 import { validateOutput } from "./validateOutput";
 
-export const buildSite = async (): Promise<void> => {
+export const buildSite = async (
+  options: CreateBuildContextOptions = {},
+): Promise<void> => {
   const distDir = path.resolve("dist");
-  const context = await createBuildContext();
+  const context = await createBuildContext(options);
 
   await cleanDist(distDir);
   await generateStaticSite(context.app, distDir);
