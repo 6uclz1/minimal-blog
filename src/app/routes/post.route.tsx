@@ -53,6 +53,18 @@ export const registerPostRoutes = (app: Hono, options: RouteOptions): void => {
         );
       }
 
+      const postIndex = options.contentIndex.publishedPosts.findIndex(
+        (publishedPost) => publishedPost.slug === post.slug,
+      );
+      const previousPost =
+        postIndex >= 0
+          ? options.contentIndex.publishedPosts[postIndex + 1]
+          : undefined;
+      const nextPost =
+        postIndex > 0
+          ? options.contentIndex.publishedPosts[postIndex - 1]
+          : undefined;
+
       return c.html(
         <Layout
           metadata={createMetadata(options.siteConfig, {
@@ -67,7 +79,12 @@ export const registerPostRoutes = (app: Hono, options: RouteOptions): void => {
           siteConfig={options.siteConfig}
           structuredData={createArticleStructuredData(options.siteConfig, post)}
         >
-          <PostPage post={post} siteConfig={options.siteConfig} />
+          <PostPage
+            nextPost={nextPost}
+            post={post}
+            previousPost={previousPost}
+            siteConfig={options.siteConfig}
+          />
         </Layout>,
       );
     },

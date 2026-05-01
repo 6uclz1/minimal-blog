@@ -10,9 +10,7 @@ type HomePageProps = {
 export const HomePage = ({ posts, siteConfig }: HomePageProps) => (
   <section class="page-section">
     <div class="page-heading">
-      <p class="eyebrow">GitHub Issues backed static blog</p>
-      <h1>{siteConfig.title}</h1>
-      <p>{siteConfig.description}</p>
+      <h1>Posts</h1>
     </div>
     <PostList posts={posts} siteConfig={siteConfig} />
   </section>

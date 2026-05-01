@@ -8,7 +8,7 @@ export type SiteConfig = {
 };
 
 export const siteConfig: SiteConfig = {
-  title: "Minimal Blog",
+  title: "6uclz1's Blog",
   description:
     "A zero-runtime-dependency static blog generator backed by GitHub Issues.",
   url: "https://6uclz1.github.io/minimal-blog",
