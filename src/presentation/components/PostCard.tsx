@@ -10,10 +10,10 @@ type PostCardProps = {
 
 export const PostCard = ({ post, siteConfig }: PostCardProps) => (
   <article class="post-row">
+    <span class="post-row__date">
+      <DateTime date={post.publishedAt} />
+    </span>
     <a class="post-row__link" href={postPath(siteConfig, post.slug)}>
-      <span class="post-row__date">
-        <DateTime date={post.publishedAt} />
-      </span>
       <span class="post-row__title">{post.title}</span>
     </a>
   </article>
