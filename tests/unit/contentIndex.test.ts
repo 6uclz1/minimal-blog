@@ -93,6 +93,24 @@ describe("buildContentIndex", () => {
     ]);
   });
 
+  it("does not expose draft or archived posts by slug", () => {
+    const draft = createPost({
+      id: "draft",
+      slug: "draft",
+      status: "draft",
+    });
+    const archived = createPost({
+      id: "archived",
+      slug: "archived",
+      status: "archived",
+    });
+
+    const index = buildContentIndex([draft, archived]);
+
+    expect(getPostBySlug(index, "draft")).toBeUndefined();
+    expect(getPostBySlug(index, "archived")).toBeUndefined();
+  });
+
   it("groups visible published posts by tag", () => {
     const typescript = createPost({
       id: "typescript",
@@ -122,6 +140,24 @@ describe("buildContentIndex", () => {
     ).toEqual([typescript]);
   });
 
+  it("normalizes tag whitespace and avoids duplicate post entries per tag", () => {
+    const post = createPost({
+      id: "tagged",
+      slug: "tagged",
+      tags: ["typescript", " typescript ", "", "architecture"],
+    });
+
+    const index = buildContentIndex([post]);
+
+    expect(listTags(index).map((tag) => tag.name)).toEqual([
+      "architecture",
+      "typescript",
+    ]);
+    expect(
+      listTags(index).find((tag) => tag.name === "typescript")?.posts,
+    ).toEqual([post]);
+  });
+
   it("groups visible published posts by archive month", () => {
     const april = createPost({
       id: "april",
@@ -140,6 +176,26 @@ describe("buildContentIndex", () => {
       "2026-04",
       "2026-03",
     ]);
+  });
+
+  it("keeps archive month posts in published listing order", () => {
+    const pinned = createPost({
+      id: "pinned",
+      slug: "pinned",
+      pinned: true,
+      publishedAt: new Date("2026-04-01T00:00:00.000Z"),
+    });
+    const newest = createPost({
+      id: "newest",
+      slug: "newest",
+      publishedAt: new Date("2026-04-30T00:00:00.000Z"),
+    });
+
+    const index = buildContentIndex([newest, pinned]);
+
+    expect(listArchiveMonths(index)[0]?.posts.map((post) => post.slug)).toEqual(
+      ["pinned", "newest"],
+    );
   });
 
   it("throws a clear error for duplicate slugs", () => {

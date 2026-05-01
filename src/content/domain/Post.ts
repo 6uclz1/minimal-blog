@@ -1,4 +1,6 @@
 import type { PostStatus } from "./PostStatus";
+import type { Slug } from "./Slug";
+import type { Tag } from "./Tag";
 
 export type Post = {
   id: string;
@@ -7,14 +9,14 @@ export type Post = {
     issueNumber: number;
     issueUrl: string;
   };
-  slug: string;
+  slug: Slug;
   title: string;
   description: string;
   excerpt: string;
   bodyMarkdown: string;
   bodyHtml: string;
   labels: string[];
-  tags: string[];
+  tags: Tag[];
   status: PostStatus;
   pinned: boolean;
   hidden: boolean;

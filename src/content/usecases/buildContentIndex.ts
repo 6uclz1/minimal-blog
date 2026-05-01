@@ -1,4 +1,5 @@
 import type { Post } from "../domain/Post";
+import { normalizeTag } from "../domain/Tag";
 
 export type TagGroup = {
   name: string;
@@ -67,12 +68,15 @@ const buildTagGroups = (posts: Post[]): TagGroup[] => {
   const groups = new Map<string, Post[]>();
 
   for (const post of posts) {
+    const seenTagsForPost = new Set<string>();
+
     for (const tag of post.tags) {
-      const normalizedTag = tag.trim();
-      if (!normalizedTag) {
+      const normalizedTag = normalizeTag(tag);
+      if (!normalizedTag || seenTagsForPost.has(normalizedTag)) {
         continue;
       }
 
+      seenTagsForPost.add(normalizedTag);
       groups.set(normalizedTag, [...(groups.get(normalizedTag) ?? []), post]);
     }
   }
