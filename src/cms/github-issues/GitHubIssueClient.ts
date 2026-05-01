@@ -1,7 +1,7 @@
 import type { GitHubIssue } from "./GitHubIssue";
 import { createIssuesPageUrl, shouldFetchNextPage } from "./pagination";
 
-type Fetcher = (
+export type Fetcher = (
   input: RequestInfo | URL,
   init?: RequestInit,
 ) => Promise<Response>;
