@@ -58,7 +58,11 @@ describe("buildSite", () => {
     expect(styles).toContain("font-weight: 100");
     expect(styles).toContain("--bg: #09090b");
     expect(styles).toContain("--noise-rgb");
+    expect(styles).toContain("--readable-surface");
     expect(styles).toContain("radial-gradient(");
     expect(styles).toContain(".noise-field");
+    expect(styles).toContain(".page-heading {");
+    expect(styles).toContain("background: var(--readable-surface)");
+    expect(styles).toContain(".post-body {");
   });
 });

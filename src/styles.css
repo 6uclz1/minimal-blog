@@ -9,6 +9,9 @@
   --fg-rgb: 13 13 15;
   --dot-rgb: 13 13 15;
   --noise-rgb: 13 13 15;
+  --readable-surface: rgba(var(--bg-rgb) / 0.9);
+  --readable-border: rgba(var(--fg-rgb) / 0.1);
+  --readable-shadow: 0 1.1rem 3rem rgba(var(--fg-rgb) / 0.08);
   --content-inline: 3rem;
   --content-max: 52rem;
   --copy-max: 40rem;
@@ -35,6 +38,9 @@
   --fg-rgb: 244 244 241;
   --dot-rgb: 244 244 241;
   --noise-rgb: 244 244 241;
+  --readable-surface: rgba(var(--bg-rgb) / 0.78);
+  --readable-border: rgba(var(--fg-rgb) / 0.12);
+  --readable-shadow: 0 1.1rem 3rem rgba(0 0 0 / 0.34);
 }
 
 * {
@@ -259,14 +265,11 @@ a {
 .post-index {
   display: grid;
   width: 100%;
+  gap: 0.52rem;
 }
 
 .post-row {
-  border-bottom: 1px solid var(--line);
-}
-
-.post-row:first-child {
-  border-top: 1px solid var(--line);
+  min-width: 0;
 }
 
 .post-row__link {
@@ -276,14 +279,17 @@ a {
   align-items: center;
   min-height: 4.5rem;
   color: var(--muted);
+  padding: 0.82rem 1rem;
   text-decoration: none;
   transition:
     color 240ms ease,
-    background-color 240ms ease;
+    background 240ms ease,
+    border-color 240ms ease;
 }
 
 .post-row__link:hover,
 .post-row__link:focus-visible {
+  border-color: rgba(var(--fg-rgb) / 0.2);
   color: var(--fg);
   outline: none;
 }
@@ -306,8 +312,6 @@ a {
 .post-page__header {
   display: grid;
   gap: 0.92rem;
-  padding-bottom: 0.9rem;
-  border-bottom: 1px solid var(--line);
 }
 
 .post-page__meta {
@@ -413,8 +417,6 @@ a {
   display: grid;
   gap: 1.8rem;
   margin-top: 0.8rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line);
 }
 
 .post-nav__links {
@@ -527,6 +529,44 @@ a {
   color: var(--muted);
 }
 
+.site-header,
+.theme-toggle,
+.site-footer,
+.page-heading,
+.post-row__link,
+.post-page__header,
+.post-body,
+.post-nav,
+.archive-month,
+.empty-state {
+  border: 1px solid var(--readable-border);
+  background: var(--readable-surface);
+  box-shadow: var(--readable-shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.site-header,
+.theme-toggle,
+.site-footer,
+.page-heading,
+.post-page__header,
+.post-body,
+.post-nav,
+.archive-month,
+.empty-state {
+  border-radius: 0.45rem;
+}
+
+.page-heading,
+.post-page__header,
+.post-body,
+.post-nav,
+.archive-month,
+.empty-state {
+  padding: 1.15rem 1.2rem;
+}
+
 .site-footer {
   position: fixed;
   right: var(--content-inline);
@@ -539,10 +579,9 @@ a {
   font-weight: 100;
   letter-spacing: 0.08em;
   line-height: 1.35;
-  opacity: 0.58;
   text-align: right;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .site-footer p {
