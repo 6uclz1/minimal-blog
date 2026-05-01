@@ -6,9 +6,6 @@ type FooterProps = {
 
 export const Footer = ({ siteConfig }: FooterProps) => (
   <footer class="site-footer">
-    <p>
-      Built as a static site by {siteConfig.author}. Content is modeled as
-      normalized posts.
-    </p>
+    <p>© 2026 {siteConfig.author}</p>
   </footer>
 );
