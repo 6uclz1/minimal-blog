@@ -10,6 +10,9 @@ export const validateOutput = async (
     "index.html",
     path.join("posts", "index.html"),
     path.join("archive", "index.html"),
+    "feed.xml",
+    "sitemap.xml",
+    "search-index.json",
     path.join("static", "styles.css"),
     ...contentIndex.detailPosts.map((post) =>
       path.join("posts", post.slug, "index.html"),

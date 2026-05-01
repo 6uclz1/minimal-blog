@@ -8,6 +8,8 @@ import { Layout } from "../../presentation/components/Layout";
 import { HomePage } from "../../presentation/pages/HomePage";
 import { NotFoundPage } from "../../presentation/pages/NotFoundPage";
 import { PostPage } from "../../presentation/pages/PostPage";
+import { createMetadata } from "../../seo/metadata";
+import { createArticleStructuredData } from "../../seo/structuredData";
 
 type RouteOptions = {
   contentIndex: ContentIndex;
@@ -17,7 +19,13 @@ type RouteOptions = {
 export const registerPostRoutes = (app: Hono, options: RouteOptions): void => {
   app.get("/posts/", (c) =>
     c.html(
-      <Layout siteConfig={options.siteConfig} title="Posts">
+      <Layout
+        metadata={createMetadata(options.siteConfig, {
+          path: "/posts/",
+          title: "Posts",
+        })}
+        siteConfig={options.siteConfig}
+      >
         <HomePage
           posts={listPublishedPosts(options.contentIndex)}
           siteConfig={options.siteConfig}
@@ -47,9 +55,17 @@ export const registerPostRoutes = (app: Hono, options: RouteOptions): void => {
 
       return c.html(
         <Layout
-          description={post.description}
+          metadata={createMetadata(options.siteConfig, {
+            canonicalUrl: post.canonicalUrl,
+            description: post.description,
+            image: post.ogImage,
+            noindex: post.noindex,
+            path: `/posts/${post.slug}/`,
+            title: post.title,
+            type: "article",
+          })}
           siteConfig={options.siteConfig}
-          title={post.title}
+          structuredData={createArticleStructuredData(options.siteConfig, post)}
         >
           <PostPage post={post} siteConfig={options.siteConfig} />
         </Layout>,
