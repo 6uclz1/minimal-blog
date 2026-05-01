@@ -1,0 +1,20 @@
+{
+  "number": 10,
+  "html_url": "https://github.com/6uclz1/minimal-blog/issues/10",
+  "title": "GitHub Issues CMS Blog",
+  "body": "---\nslug: github-issues-cms-blog\ndescription: GitHub Issues as a CMS.\npublishedAt: 2026-04-30\ncanonicalUrl: https://6uclz1.github.io/minimal-blog/posts/github-issues-cms-blog/\nogImage: /og/custom.png\n---\n# Hello\n\nThis is **published** content.",
+  "state": "open",
+  "labels": [
+    { "name": "post" },
+    { "name": "published" },
+    { "name": "pinned" },
+    { "name": "noindex" },
+    { "name": "tag:typescript" },
+    { "name": "tag:architecture" }
+  ],
+  "user": {
+    "login": "6uclz1"
+  },
+  "created_at": "2026-04-29T10:00:00.000Z",
+  "updated_at": "2026-04-30T12:00:00.000Z"
+}

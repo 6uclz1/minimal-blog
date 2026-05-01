@@ -1,0 +1,17 @@
+{
+  "number": 12,
+  "html_url": "https://github.com/6uclz1/minimal-blog/issues/12",
+  "title": "Archived Post",
+  "body": "Archived body.",
+  "state": "open",
+  "labels": [
+    { "name": "post" },
+    { "name": "published" },
+    { "name": "archived" }
+  ],
+  "user": {
+    "login": "6uclz1"
+  },
+  "created_at": "2026-04-29T10:00:00.000Z",
+  "updated_at": "2026-04-30T12:00:00.000Z"
+}
