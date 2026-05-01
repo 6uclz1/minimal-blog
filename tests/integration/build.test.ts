@@ -18,7 +18,7 @@ describe("buildSite", () => {
   it("generates static HTML and CSS files", async () => {
     await rm(distDir, { recursive: true, force: true });
 
-    await buildSite();
+    await buildSite({ env: {} });
 
     expect(await exists(path.join(distDir, "index.html"))).toBe(true);
     expect(await exists(path.join(distDir, "posts", "index.html"))).toBe(true);

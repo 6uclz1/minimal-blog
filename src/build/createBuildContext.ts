@@ -8,7 +8,7 @@ import { FixtureContentRepository } from "../content/fixtures/FixtureContentRepo
 import type { ContentRepository } from "../content/ports/ContentRepository";
 import { buildContentIndex } from "../content/usecases/buildContentIndex";
 
-type CreateBuildContextOptions = {
+export type CreateBuildContextOptions = {
   env?: NodeJS.ProcessEnv;
   fetcher?: Fetcher;
 };
