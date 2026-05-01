@@ -1,0 +1,27 @@
+import type { Hono } from "hono";
+import type { SiteConfig } from "../../config/site.config";
+import type { ContentIndex } from "../../content/usecases/buildContentIndex";
+import { listArchiveMonths } from "../../content/usecases/listArchiveMonths";
+import { Layout } from "../../presentation/components/Layout";
+import { ArchivePage } from "../../presentation/pages/ArchivePage";
+
+type RouteOptions = {
+  contentIndex: ContentIndex;
+  siteConfig: SiteConfig;
+};
+
+export const registerArchiveRoute = (
+  app: Hono,
+  options: RouteOptions,
+): void => {
+  app.get("/archive/", (c) =>
+    c.html(
+      <Layout siteConfig={options.siteConfig} title="Archive">
+        <ArchivePage
+          archiveMonths={listArchiveMonths(options.contentIndex)}
+          siteConfig={options.siteConfig}
+        />
+      </Layout>,
+    ),
+  );
+};
