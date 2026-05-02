@@ -18,7 +18,6 @@ export const PostPage = ({ post, siteConfig }: PostPageProps) => (
         <span>{post.readingTimeMinutes} min read</span>
       </p>
       <h1>{post.title}</h1>
-      <p>{post.description}</p>
       {post.tags.length > 0 ? (
         <div class="tag-list">
           {post.tags.map((tag) => (
