@@ -13,8 +13,15 @@
   --content-inline: 3rem;
   --content-max: 52rem;
   --copy-max: 40rem;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo,
+    sans-serif;
+  --text-weight: 300;
   --brand-letter-spacing: 0.14em;
   --brand-hover-trailing-space: 0.44rem;
+  --title-letter-spacing: 0.14em;
+  --title-hover-trailing-space: 0.4rem;
   --hover-surface: linear-gradient(
     90deg,
     var(--readable-text-surface),
@@ -72,10 +79,9 @@ body {
     ),
     var(--bg);
   color: var(--fg);
-  font-family:
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   font-size: 16px;
-  font-weight: 100;
+  font-weight: var(--text-weight);
   line-height: 1.65;
   transition:
     background-color 240ms ease,
@@ -156,7 +162,7 @@ a {
 .site-header__brand {
   color: var(--muted);
   font-size: 0.88rem;
-  font-weight: 100;
+  font-weight: var(--text-weight);
   letter-spacing: var(--brand-letter-spacing);
   line-height: 1.35;
   max-width: 100%;
@@ -188,7 +194,7 @@ a {
   cursor: pointer;
   font: inherit;
   font-size: 0.88rem;
-  font-weight: 100;
+  font-weight: var(--text-weight);
   letter-spacing: 0.14em;
   line-height: 1.35;
   padding: 0.42rem 0.52rem;
@@ -240,8 +246,8 @@ a {
   margin: 0;
   color: var(--fg);
   font-size: 1.72rem;
-  font-weight: 100;
-  letter-spacing: 0.14em;
+  font-weight: var(--text-weight);
+  letter-spacing: var(--title-letter-spacing);
   line-height: 1.28;
 }
 
@@ -258,7 +264,7 @@ a {
 .archive-month time {
   color: var(--muted);
   font-size: 0.78rem;
-  font-weight: 100;
+  font-weight: var(--text-weight);
   letter-spacing: 0.14em;
   line-height: 1.35;
   text-transform: uppercase;
@@ -301,8 +307,8 @@ a {
 .post-row__title {
   color: inherit;
   font-size: 0.88rem;
-  font-weight: 100;
-  letter-spacing: 0.14em;
+  font-weight: var(--text-weight);
+  letter-spacing: var(--title-letter-spacing);
   line-height: 1.35;
   overflow-wrap: normal;
   white-space: nowrap;
@@ -334,7 +340,7 @@ a {
 .tag-badge {
   color: var(--muted);
   font-size: 0.82rem;
-  font-weight: 100;
+  font-weight: var(--text-weight);
   letter-spacing: 0.08em;
   text-decoration: none;
   transition: color 240ms ease;
@@ -408,6 +414,16 @@ a {
   );
 }
 
+.page-heading h1,
+.post-page__header h1,
+.post-row__title {
+  padding-right: calc(
+    var(--hover-inline-space) +
+    var(--title-letter-spacing) +
+    var(--title-hover-trailing-space)
+  );
+}
+
 .post-body > :where(ul, ol) {
   padding-left: 1.72rem;
 }
@@ -416,7 +432,7 @@ a {
 .post-body h3 {
   margin-top: 0.8rem;
   color: var(--fg);
-  font-weight: 100;
+  font-weight: var(--text-weight);
   letter-spacing: 0.08em;
   line-height: 1.45;
 }
@@ -475,7 +491,7 @@ a {
 .post-nav__back {
   color: var(--muted);
   font-size: 0.82rem;
-  font-weight: 100;
+  font-weight: var(--text-weight);
   justify-self: center;
   letter-spacing: 0.08em;
   line-height: 1.45;
@@ -526,7 +542,7 @@ a {
   margin: 0;
   color: var(--fg);
   font-size: 1rem;
-  font-weight: 100;
+  font-weight: var(--text-weight);
   letter-spacing: 0.1em;
 }
 
@@ -580,7 +596,7 @@ a {
   padding: 0.42rem 0.52rem;
   color: var(--muted);
   font-size: 0.78rem;
-  font-weight: 100;
+  font-weight: var(--text-weight);
   letter-spacing: 0.08em;
   line-height: 1.35;
   text-align: right;

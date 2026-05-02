@@ -68,7 +68,8 @@ describe("buildSite", () => {
     expect(postHtml).not.toContain('class="post-nav__links"');
     expect(postHtml).not.toContain('class="post-nav__label"');
 
-    expect(styles).toContain("font-weight: 100");
+    expect(styles).toContain("--text-weight: 300");
+    expect(styles).not.toContain("font-weight: 100");
     expect(styles).toContain("--bg: #09090b");
     expect(styles).toContain("--noise-rgb");
     expect(styles).toContain("radial-gradient(");
@@ -76,6 +77,8 @@ describe("buildSite", () => {
     expect(styles).toContain("--readable-text-surface");
     expect(styles).toContain("--brand-letter-spacing: 0.14em");
     expect(styles).toContain("--brand-hover-trailing-space: 0.44rem");
+    expect(styles).toContain("--title-letter-spacing: 0.14em");
+    expect(styles).toContain("--title-hover-trailing-space: 0.4rem");
     expect(styles).toContain("--hover-inline-space: 0.36rem");
     expect(styles).toContain("--link-hover-duration: 1280ms");
     expect(styles).toContain(
@@ -93,6 +96,9 @@ describe("buildSite", () => {
     expect(styles).toContain("padding: 0.2rem var(--hover-inline-space)");
     expect(styles).toContain(
       "padding-right: calc(\n    var(--hover-inline-space) +\n    var(--brand-letter-spacing) +\n    var(--brand-hover-trailing-space)\n  )",
+    );
+    expect(styles).toContain(
+      "padding-right: calc(\n    var(--hover-inline-space) +\n    var(--title-letter-spacing) +\n    var(--title-hover-trailing-space)\n  )",
     );
     expect(styles).not.toContain("--hover-trailing-space");
     expect(styles).toContain("background-size:\n    0% 100%,");
