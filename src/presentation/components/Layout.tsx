@@ -32,6 +32,7 @@ export const Layout = ({
       title,
     });
   const openGraph = createOpenGraphMetadata(siteConfig, pageMetadata);
+  const socialMetaTags = createSocialMetaTags(openGraph);
   const jsonLd = structuredData
     ? JSON.stringify(structuredData).replaceAll("<", "\\u003c")
     : undefined;
@@ -661,27 +662,7 @@ export const Layout = ({
             <meta name="robots" content="noindex" />
           ) : null}
           <link rel="canonical" href={pageMetadata.canonicalUrl} />
-          <meta property="og:title" content={openGraph.title} />
-          <meta property="og:description" content={openGraph.description} />
-          <meta property="og:type" content={openGraph.type} />
-          <meta property="og:url" content={openGraph.url} />
-          <meta property="og:image" content={openGraph.image} />
-          <meta
-            property="og:image:width"
-            content={String(openGraph.imageWidth)}
-          />
-          <meta
-            property="og:image:height"
-            content={String(openGraph.imageHeight)}
-          />
-          <meta property="og:image:alt" content={openGraph.imageAlt} />
-          <meta property="og:site_name" content={openGraph.siteName} />
-          <meta property="og:locale" content={openGraph.locale} />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={openGraph.title} />
-          <meta name="twitter:description" content={openGraph.description} />
-          <meta name="twitter:image" content={openGraph.image} />
-          <meta name="twitter:image:alt" content={openGraph.imageAlt} />
+          {raw(socialMetaTags)}
           <script>{raw(themeScript)}</script>
           <link
             rel="stylesheet"
@@ -714,3 +695,49 @@ export const Layout = ({
     </>
   );
 };
+
+type SocialMetaInput = {
+  description: string;
+  image: string;
+  imageAlt: string;
+  imageHeight: number;
+  imageWidth: number;
+  locale: string;
+  siteName: string;
+  title: string;
+  type: string;
+  url: string;
+};
+
+const createSocialMetaTags = (openGraph: SocialMetaInput): string =>
+  [
+    renderMetaTag("property", "og:title", openGraph.title),
+    renderMetaTag("property", "og:description", openGraph.description),
+    renderMetaTag("property", "og:type", openGraph.type),
+    renderMetaTag("property", "og:url", openGraph.url),
+    renderMetaTag("property", "og:image", openGraph.image),
+    renderMetaTag("property", "og:image:width", String(openGraph.imageWidth)),
+    renderMetaTag("property", "og:image:height", String(openGraph.imageHeight)),
+    renderMetaTag("property", "og:image:alt", openGraph.imageAlt),
+    renderMetaTag("property", "og:site_name", openGraph.siteName),
+    renderMetaTag("property", "og:locale", openGraph.locale),
+    renderMetaTag("name", "twitter:card", "summary_large_image"),
+    renderMetaTag("name", "twitter:title", openGraph.title),
+    renderMetaTag("name", "twitter:description", openGraph.description),
+    renderMetaTag("name", "twitter:image", openGraph.image),
+    renderMetaTag("name", "twitter:image:alt", openGraph.imageAlt),
+  ].join("");
+
+const renderMetaTag = (
+  keyAttribute: "name" | "property",
+  key: string,
+  content: string,
+): string =>
+  `<meta ${keyAttribute}="${escapeHtmlAttribute(key)}" content="${escapeHtmlAttribute(content)}">`;
+
+const escapeHtmlAttribute = (value: string): string =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
