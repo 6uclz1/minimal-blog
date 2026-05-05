@@ -58,9 +58,9 @@ export const registerPostRoutes = (app: Hono, options: RouteOptions): void => {
           metadata={createMetadata(options.siteConfig, {
             canonicalUrl: post.canonicalUrl,
             description: post.description,
-            image: post.ogImage,
             noindex: post.noindex,
             path: `/posts/${post.slug}/`,
+            post,
             title: post.title,
             type: "article",
           })}

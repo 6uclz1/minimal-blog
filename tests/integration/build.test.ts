@@ -14,6 +14,17 @@ const exists = async (filePath: string): Promise<boolean> => {
   }
 };
 
+const readPngSize = async (
+  filePath: string,
+): Promise<{ height: number; width: number }> => {
+  const png = await readFile(filePath);
+
+  return {
+    height: png.readUInt32BE(20),
+    width: png.readUInt32BE(16),
+  };
+};
+
 describe("buildSite", () => {
   it("generates static files with the shared ambient design shell", async () => {
     await rm(distDir, { recursive: true, force: true });
@@ -33,11 +44,66 @@ describe("buildSite", () => {
     expect(await exists(path.join(distDir, "search-index.json"))).toBe(true);
     expect(await exists(path.join(distDir, "static", "styles.css"))).toBe(true);
 
-    const [homeHtml, postHtml, styles] = await Promise.all([
+    const [homeHtml, postHtml, styles, customOgHtml] = await Promise.all([
       readFile(path.join(distDir, "index.html"), "utf8"),
       readFile(path.join(distDir, "posts", "hello-hono", "index.html"), "utf8"),
       readFile(path.join(distDir, "static", "styles.css"), "utf8"),
+      readFile(
+        path.join(distDir, "posts", "content-model-first", "index.html"),
+        "utf8",
+      ),
     ]);
+
+    const generatedOgImageMatches = [
+      ...postHtml.matchAll(
+        /https:\/\/6uclz1\.github\.io\/minimal-blog\/(og\/posts\/hello-hono-[a-f0-9]{10}\.png)/g,
+      ),
+    ];
+    const defaultOgImageMatches = [
+      ...homeHtml.matchAll(
+        /https:\/\/6uclz1\.github\.io\/minimal-blog\/(og\/default-[a-f0-9]{10}\.png)/g,
+      ),
+    ];
+
+    expect(defaultOgImageMatches.length).toBeGreaterThanOrEqual(2);
+    expect(generatedOgImageMatches.length).toBeGreaterThanOrEqual(2);
+    expect(
+      await exists(path.join(distDir, defaultOgImageMatches[0]?.[1] ?? "")),
+    ).toBe(true);
+    expect(
+      await exists(path.join(distDir, generatedOgImageMatches[0]?.[1] ?? "")),
+    ).toBe(true);
+    expect(await exists(path.join(distDir, "og", "custom-fixture.png"))).toBe(
+      false,
+    );
+    await expect(
+      readPngSize(path.join(distDir, generatedOgImageMatches[0]?.[1] ?? "")),
+    ).resolves.toEqual({ height: 630, width: 1200 });
+
+    expect(postHtml).toContain('<meta property="og:title"');
+    expect(postHtml).toContain('<meta property="og:description"');
+    expect(postHtml).toContain('<meta property="og:type" content="article"');
+    expect(postHtml).toContain(
+      '<meta property="og:url" content="https://6uclz1.github.io/minimal-blog/posts/hello-hono/"',
+    );
+    expect(postHtml).toContain('<meta property="og:image"');
+    expect(postHtml).toContain(
+      '<meta property="og:image:width" content="1200"',
+    );
+    expect(postHtml).toContain(
+      '<meta property="og:image:height" content="630"',
+    );
+    expect(postHtml).toContain('<meta property="og:image:alt"');
+    expect(postHtml).toContain(
+      '<meta name="twitter:card" content="summary_large_image"',
+    );
+    expect(postHtml).toContain('<meta name="twitter:title"');
+    expect(postHtml).toContain('<meta name="twitter:description"');
+    expect(postHtml).toContain('<meta name="twitter:image"');
+    expect(homeHtml).not.toContain(["example", ".com"].join(""));
+    expect(postHtml).not.toContain(["example", ".com"].join(""));
+    expect(homeHtml).not.toContain("placehold.co");
+    expect(postHtml).not.toContain("placehold.co");
 
     expect(homeHtml).toContain('class="noise-field"');
     expect(homeHtml).toContain('data-ambient-field="true"');
@@ -67,6 +133,9 @@ describe("buildSite", () => {
     expect(postHtml).not.toContain("Next");
     expect(postHtml).not.toContain('class="post-nav__links"');
     expect(postHtml).not.toContain('class="post-nav__label"');
+    expect(customOgHtml).toContain(
+      'content="https://6uclz1.github.io/minimal-blog/og/custom-fixture.png"',
+    );
 
     expect(styles).toContain("--text-weight: 300");
     expect(styles).not.toContain("font-weight: 100");

@@ -6,6 +6,7 @@ import {
   type CreateBuildContextOptions,
   createBuildContext,
 } from "./createBuildContext";
+import { generateOgImages } from "./generateOgImages";
 import { generateStaticSite } from "./generateStaticSite";
 import { validateOutput } from "./validateOutput";
 
@@ -18,7 +19,8 @@ export const buildSite = async (
   await cleanDist(distDir);
   await generateStaticSite(context.app, distDir);
   await copyPublicAssets(distDir);
-  await validateOutput(distDir, context.contentIndex);
+  await generateOgImages(distDir, context.siteConfig, context.contentIndex);
+  await validateOutput(distDir, context.siteConfig, context.contentIndex);
 };
 
 const isMainModule = (): boolean => {

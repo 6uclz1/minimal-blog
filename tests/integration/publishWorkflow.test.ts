@@ -24,6 +24,7 @@ describe("publish workflow", () => {
     expect(workflow).toContain("npm run build");
     expect(workflow).toContain("actions/upload-pages-artifact@v3");
     expect(workflow).toContain("actions/deploy-pages@v4");
+    expect(workflow).toContain("fonts-noto-cjk");
     expect(workflow).toContain(
       ["GITHUB_TOKEN: $", "{{ secrets.GITHUB_TOKEN }}"].join(""),
     );

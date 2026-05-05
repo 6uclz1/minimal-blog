@@ -11,14 +11,7 @@ import {
 } from "./labels";
 import { parseIssueFrontmatter } from "./parseIssueFrontmatter";
 
-type IssueToPostOptions = {
-  defaultOgImage?: string;
-};
-
-export const issueToPost = (
-  issue: GitHubIssue,
-  options: IssueToPostOptions = {},
-): Post => {
+export const issueToPost = (issue: GitHubIssue): Post => {
   const parsedBody = parseIssueFrontmatter(issue.body ?? "");
   const bodyHtml = renderMarkdown(parsedBody.bodyMarkdown);
   const excerpt = extractExcerpt(bodyHtml);
@@ -44,7 +37,7 @@ export const issueToPost = (
     hidden: hasLabel(issue, supportedLabels.hidden),
     noindex: hasLabel(issue, supportedLabels.noindex),
     canonicalUrl: parsedBody.frontmatter.canonicalUrl,
-    ogImage: parsedBody.frontmatter.ogImage ?? options.defaultOgImage,
+    ogImage: parsedBody.frontmatter.ogImage,
     publishedAt: parseDate(
       parsedBody.frontmatter.publishedAt ?? issue.created_at,
       "publishedAt",
@@ -56,9 +49,9 @@ export const issueToPost = (
 };
 
 export const createSlug = (value: string, issueNumber?: number): string => {
-  const slug = Array.from(value.trim().toLowerCase())
+  const slug = Array.from(value.trim().toLowerCase().normalize("NFKD"))
     .map((character) => {
-      if (/[\p{Letter}\p{Number}]/u.test(character)) {
+      if (/[a-z0-9]/.test(character)) {
         return character;
       }
 

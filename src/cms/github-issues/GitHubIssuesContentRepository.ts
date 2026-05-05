@@ -6,25 +6,20 @@ import { issueToPost } from "./issueToPost";
 
 type GitHubIssuesContentRepositoryOptions = {
   client: Pick<GitHubIssueClient, "listIssues">;
-  defaultOgImage?: string;
 };
 
 export class GitHubIssuesContentRepository implements ContentRepository {
   private readonly client: Pick<GitHubIssueClient, "listIssues">;
-  private readonly defaultOgImage?: string;
 
   constructor(options: GitHubIssuesContentRepositoryOptions) {
     this.client = options.client;
-    this.defaultOgImage = options.defaultOgImage;
   }
 
   async listPosts(): Promise<Post[]> {
     const issues = await this.client.listIssues();
-    const posts = issues.filter(isPublicPostIssue).map((issue) =>
-      issueToPost(issue, {
-        defaultOgImage: this.defaultOgImage,
-      }),
-    );
+    const posts = issues
+      .filter(isPublicPostIssue)
+      .map((issue) => issueToPost(issue));
 
     return resolveDuplicateSlugs(posts);
   }

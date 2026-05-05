@@ -3,6 +3,11 @@ import type { SiteConfig } from "../../src/config/site.config";
 import type { Post } from "../../src/content/domain/Post";
 import { buildContentIndex } from "../../src/content/usecases/buildContentIndex";
 import { createMetadata } from "../../src/seo/metadata";
+import {
+  createDefaultOgImageDescriptor,
+  createPostOgImageDescriptor,
+  resolvePageOgImagePath,
+} from "../../src/seo/ogImage/paths";
 import { createOpenGraphMetadata } from "../../src/seo/openGraph";
 import { generateRssFeed } from "../../src/seo/rss";
 import { createSearchIndex } from "../../src/seo/searchIndex";
@@ -59,11 +64,78 @@ describe("SEO generators", () => {
       title: "First Post | Minimal Blog",
     });
     expect(openGraph).toMatchObject({
-      image: "https://6uclz1.github.io/minimal-blog/og-default.png",
+      imageAlt: "First Post | Minimal Blog",
+      imageHeight: 630,
+      imageWidth: 1200,
+      siteName: "Minimal Blog",
       title: "First Post | Minimal Blog",
       type: "website",
       url: "https://6uclz1.github.io/minimal-blog/posts/first-post/",
     });
+    expect(openGraph.image).toMatch(
+      /^https:\/\/6uclz1\.github\.io\/minimal-blog\/og\/default-[a-f0-9]{10}\.png$/,
+    );
+  });
+
+  it("resolves generated and custom Open Graph image paths centrally", () => {
+    const post = createPost({
+      slug: "generated-post",
+      title: "Generated Post",
+      description: "Generated social image text",
+    });
+    const descriptor = createPostOgImageDescriptor(siteConfig, post);
+
+    expect(descriptor.publicPath).toMatch(
+      /^\/og\/posts\/generated-post-[a-f0-9]{10}\.png$/,
+    );
+    expect(descriptor.width).toBe(1200);
+    expect(descriptor.height).toBe(630);
+    expect(resolvePageOgImagePath(siteConfig, { post })).toBe(
+      descriptor.publicPath,
+    );
+    expect(
+      resolvePageOgImagePath(siteConfig, {
+        post: createPost({ ogImage: "/og/custom.png" }),
+      }),
+    ).toBe("/og/custom.png");
+    expect(resolvePageOgImagePath(siteConfig)).toMatch(
+      /^\/og\/default-[a-f0-9]{10}\.png$/,
+    );
+  });
+
+  it("uses generated article image metadata when a post has no custom ogImage", () => {
+    const post = createPost({
+      slug: "article-with-generated-image",
+      title: "Article With Generated Image",
+    });
+    const metadata = createMetadata(siteConfig, {
+      description: post.description,
+      path: `/posts/${post.slug}/`,
+      post,
+      title: post.title,
+      type: "article",
+    });
+    const openGraph = createOpenGraphMetadata(siteConfig, metadata);
+
+    expect(openGraph).toMatchObject({
+      imageAlt: "Article With Generated Image | Minimal Blog",
+      imageHeight: 630,
+      imageWidth: 1200,
+      type: "article",
+    });
+    expect(openGraph.image).toMatch(
+      /^https:\/\/6uclz1\.github\.io\/minimal-blog\/og\/posts\/article-with-generated-image-[a-f0-9]{10}\.png$/,
+    );
+  });
+
+  it("creates deterministic default Open Graph image descriptors", () => {
+    const firstDescriptor = createDefaultOgImageDescriptor(siteConfig);
+    const secondDescriptor = createDefaultOgImageDescriptor(siteConfig);
+
+    expect(firstDescriptor).toEqual(secondDescriptor);
+    expect(firstDescriptor.publicPath).toMatch(
+      /^\/og\/default-[a-f0-9]{10}\.png$/,
+    );
   });
 
   it("generates an RSS feed with absolute post URLs and escaped XML", () => {
