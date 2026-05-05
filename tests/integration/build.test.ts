@@ -81,6 +81,12 @@ describe("buildSite", () => {
     ).resolves.toEqual({ height: 630, width: 1200 });
 
     expect(postHtml).toContain('<meta property="og:title"');
+    expect(postHtml).toContain(
+      '<meta property="og:title" content="Hello Hono | 6uclz1\'s Blog">',
+    );
+    expect(postHtml).not.toContain(
+      '<meta property="og:title" content="Hello Hono | 6uclz1&#39;s Blog"',
+    );
     expect(postHtml).toContain('<meta property="og:description"');
     expect(postHtml).toContain('<meta property="og:type" content="article"');
     expect(postHtml).toContain(
@@ -98,6 +104,12 @@ describe("buildSite", () => {
       '<meta name="twitter:card" content="summary_large_image"',
     );
     expect(postHtml).toContain('<meta name="twitter:title"');
+    expect(postHtml).toContain(
+      '<meta name="twitter:title" content="Hello Hono | 6uclz1\'s Blog">',
+    );
+    expect(postHtml).not.toContain(
+      '<meta name="twitter:title" content="Hello Hono | 6uclz1&#39;s Blog"',
+    );
     expect(postHtml).toContain('<meta name="twitter:description"');
     expect(postHtml).toContain('<meta name="twitter:image"');
     expect(homeHtml).not.toContain(["example", ".com"].join(""));

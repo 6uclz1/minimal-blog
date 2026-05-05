@@ -2,35 +2,30 @@ import type { OgImageDescriptor } from "./paths";
 import { ogImageHeight, ogImageWidth } from "./paths";
 
 const titleLineLength = 22;
-const descriptionLineLength = 42;
 
 export const createOgImageSvg = (descriptor: OgImageDescriptor): string => {
   const titleLines = wrapText(descriptor.title, titleLineLength, 3);
-  const descriptionLines = wrapText(
-    descriptor.description,
-    descriptionLineLength,
-    2,
-  );
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${ogImageWidth}" height="${ogImageHeight}" viewBox="0 0 ${ogImageWidth} ${ogImageHeight}">
-  <rect width="1200" height="630" fill="#f4f4f1"/>
-  <rect x="56" y="56" width="1088" height="518" rx="0" fill="#09090b"/>
-  <path d="M56 438 C214 350 336 532 498 454 C654 379 734 216 895 278 C1014 324 1069 245 1144 188 L1144 574 L56 574 Z" fill="#d8ff6f" opacity="0.95"/>
-  <path d="M56 504 C236 423 355 609 548 526 C720 452 804 322 968 358 C1056 377 1105 336 1144 304 L1144 574 L56 574 Z" fill="#ff5a3d" opacity="0.78"/>
-  <text x="104" y="132" fill="#f4f4f1" font-family="Noto Sans CJK JP, Noto Sans JP, system-ui, sans-serif" font-size="30" font-weight="600">${escapeSvgText(descriptor.siteTitle)}</text>
-  <text x="104" y="264" fill="#f4f4f1" font-family="Noto Sans CJK JP, Noto Sans JP, system-ui, sans-serif" font-size="70" font-weight="700">
+  <defs>
+    <pattern id="dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.25" fill="#f4f4f1" opacity="0.34"/>
+    </pattern>
+    <linearGradient id="edge-fade" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f4f4f1" stop-opacity="0.1"/>
+      <stop offset="0.52" stop-color="#f4f4f1" stop-opacity="0"/>
+      <stop offset="1" stop-color="#f4f4f1" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#09090b"/>
+  <rect width="1200" height="630" fill="url(#dot-grid)"/>
+  <rect width="1200" height="630" fill="url(#edge-fade)"/>
+  <text x="96" y="126" fill="#f4f4f1" font-family="Noto Sans CJK JP, Noto Sans JP, system-ui, sans-serif" font-size="30" font-weight="600" letter-spacing="3">${escapeSvgText(descriptor.siteTitle)}</text>
+  <text x="96" y="292" fill="#f4f4f1" font-family="Noto Sans CJK JP, Noto Sans JP, system-ui, sans-serif" font-size="72" font-weight="700">
 ${titleLines
   .map(
     (line, index) =>
-      `    <tspan x="104" dy="${index === 0 ? 0 : 82}">${escapeSvgText(line)}</tspan>`,
-  )
-  .join("\n")}
-  </text>
-  <text x="104" y="486" fill="#09090b" font-family="Noto Sans CJK JP, Noto Sans JP, system-ui, sans-serif" font-size="34" font-weight="600">
-${descriptionLines
-  .map(
-    (line, index) =>
-      `    <tspan x="104" dy="${index === 0 ? 0 : 44}">${escapeSvgText(line)}</tspan>`,
+      `    <tspan x="96" dy="${index === 0 ? 0 : 86}">${escapeSvgText(line)}</tspan>`,
   )
   .join("\n")}
   </text>

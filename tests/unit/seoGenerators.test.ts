@@ -8,6 +8,7 @@ import {
   createPostOgImageDescriptor,
   resolvePageOgImagePath,
 } from "../../src/seo/ogImage/paths";
+import { createOgImageSvg } from "../../src/seo/ogImage/svg";
 import { createOpenGraphMetadata } from "../../src/seo/openGraph";
 import { generateRssFeed } from "../../src/seo/rss";
 import { createSearchIndex } from "../../src/seo/searchIndex";
@@ -101,6 +102,24 @@ describe("SEO generators", () => {
     expect(resolvePageOgImagePath(siteConfig)).toMatch(
       /^\/og\/default-[a-f0-9]{10}\.png$/,
     );
+  });
+
+  it("renders Open Graph image SVGs with only the site and post title text", () => {
+    const descriptor = createPostOgImageDescriptor(
+      { ...siteConfig, title: "6uclz1's Blog" },
+      createPost({
+        description: "This description must not appear in the image.",
+        title: "ブログサイトを作ってみた",
+      }),
+    );
+
+    const svg = createOgImageSvg(descriptor);
+
+    expect(svg).toContain("6uclz1's Blog");
+    expect(svg).toContain("ブログサイトを作ってみた");
+    expect(svg).not.toContain("This description must not appear in the image.");
+    expect(svg).toContain('id="dot-grid"');
+    expect(svg).toContain('fill="url(#dot-grid)"');
   });
 
   it("uses generated article image metadata when a post has no custom ogImage", () => {
