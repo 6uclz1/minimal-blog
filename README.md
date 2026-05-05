@@ -92,12 +92,28 @@ ogImage: /og/custom.png
 
 Fallbacks:
 
-- `slug`: generated from the issue title
+- `slug`: generated from ASCII URL text in the issue title, or `issue-<number>` when the title has no ASCII URL text
 - `description`: generated from the rendered excerpt
 - `publishedAt`: issue `created_at`
 - `updatedAt`: issue `updated_at`
 - `tags`: labels that start with `tag:`
-- `ogImage`: `siteConfig.defaultOgImage`
+- `ogImage`: optional; when omitted, an article-specific OGP PNG is generated at build time
+
+`ogImage` overrides the generated article image. Root-relative paths such as `/og/custom.png` are resolved against `siteConfig.url`, and fully qualified HTTPS URLs are preserved. Use 1200x630 images for custom social preview assets.
+
+## Social previews / OGP
+
+`npm run build` writes social preview metadata into the initial HTML head and generates PNG images under `dist/og/`.
+
+Article pages use an article-specific OGP PNG unless frontmatter provides `ogImage`. Home, posts, archive, and tag pages use the generated default site OGP image. Generated and custom image URLs are emitted as absolute URLs under `siteConfig.url`.
+
+To verify locally:
+
+```sh
+npm run build
+```
+
+Then inspect `dist/posts/<slug>/index.html` for `og:image` and `twitter:image`, and inspect generated images under `dist/og/`. After deployment, external social preview debuggers can be used against the GitHub Pages URL.
 
 ## Deployment
 

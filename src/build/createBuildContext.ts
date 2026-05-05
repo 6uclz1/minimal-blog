@@ -46,6 +46,5 @@ const createContentRepository = (
 
   return new GitHubIssuesContentRepository({
     client,
-    defaultOgImage: siteConfig.defaultOgImage,
   });
 };

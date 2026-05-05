@@ -666,7 +666,22 @@ export const Layout = ({
           <meta property="og:type" content={openGraph.type} />
           <meta property="og:url" content={openGraph.url} />
           <meta property="og:image" content={openGraph.image} />
+          <meta
+            property="og:image:width"
+            content={String(openGraph.imageWidth)}
+          />
+          <meta
+            property="og:image:height"
+            content={String(openGraph.imageHeight)}
+          />
+          <meta property="og:image:alt" content={openGraph.imageAlt} />
+          <meta property="og:site_name" content={openGraph.siteName} />
+          <meta property="og:locale" content={openGraph.locale} />
           <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={openGraph.title} />
+          <meta name="twitter:description" content={openGraph.description} />
+          <meta name="twitter:image" content={openGraph.image} />
+          <meta name="twitter:image:alt" content={openGraph.imageAlt} />
           <script>{raw(themeScript)}</script>
           <link
             rel="stylesheet"

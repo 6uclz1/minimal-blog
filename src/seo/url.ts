@@ -4,6 +4,10 @@ export const absoluteUrl = (
   siteConfig: Pick<SiteConfig, "url">,
   path: string,
 ): string => {
+  if (/^https?:\/\//.test(path)) {
+    return path;
+  }
+
   const baseUrl = siteConfig.url.endsWith("/")
     ? siteConfig.url
     : `${siteConfig.url}/`;

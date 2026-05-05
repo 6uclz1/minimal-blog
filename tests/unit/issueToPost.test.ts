@@ -4,9 +4,7 @@ import { loadIssueFixture } from "./githubIssueTestUtils";
 
 describe("issueToPost", () => {
   it("converts a published GitHub Issue into a normalized Post", async () => {
-    const post = issueToPost(await loadIssueFixture("published"), {
-      defaultOgImage: "/og-default.png",
-    });
+    const post = issueToPost(await loadIssueFixture("published"));
 
     expect(post).toMatchObject({
       id: "github-issue-10",
@@ -52,7 +50,7 @@ describe("issueToPost", () => {
       title: "Fallback Title",
     };
 
-    const post = issueToPost(issue, { defaultOgImage: "/og-default.png" });
+    const post = issueToPost(issue);
 
     expect(post.slug).toBe("fallback-title");
     expect(post.description).toBe(
@@ -60,7 +58,21 @@ describe("issueToPost", () => {
     );
     expect(post.publishedAt.toISOString()).toBe("2026-04-29T10:00:00.000Z");
     expect(post.hidden).toBe(true);
-    expect(post.ogImage).toBe("/og-default.png");
+    expect(post.ogImage).toBeUndefined();
+  });
+
+  it("falls back to an issue id slug when the title has no ASCII URL text", async () => {
+    const issue = {
+      ...(await loadIssueFixture("published")),
+      body: "本文です。",
+      number: 42,
+      title: "日本語の記事タイトル",
+    };
+
+    const post = issueToPost(issue);
+
+    expect(post.slug).toBe("issue-42");
+    expect(post.slug).not.toContain("日本語");
   });
 
   it("throws a clear error for malformed frontmatter", async () => {

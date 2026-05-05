@@ -1,5 +1,6 @@
 import type { SiteConfig } from "../config/site.config";
 import type { Post } from "../content/domain/Post";
+import { resolvePageOgImagePath } from "./ogImage/paths";
 import { absoluteAssetUrl, absoluteUrl } from "./url";
 
 export type ArticleStructuredData = {
@@ -33,7 +34,7 @@ export const createArticleStructuredData = (
   headline: post.title,
   image: absoluteAssetUrl(
     siteConfig,
-    post.ogImage ?? siteConfig.defaultOgImage,
+    resolvePageOgImagePath(siteConfig, { post }),
   ),
   mainEntityOfPage: absoluteUrl(siteConfig, `/posts/${post.slug}/`),
 });

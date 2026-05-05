@@ -18,6 +18,8 @@ describe("project documentation", () => {
     expect(readme).toContain("Zero runtime dependencies except Hono");
     expect(readme).toContain("npm run build");
     expect(readme).toContain("tag:typescript");
+    expect(readme).toContain("Social previews / OGP");
+    expect(readme).toContain("article-specific OGP PNG");
 
     expect(agentInstructions).toContain("Do not introduce Next.js");
     expect(agentInstructions).toContain("Do not introduce a database");

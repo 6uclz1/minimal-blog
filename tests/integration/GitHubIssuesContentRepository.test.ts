@@ -24,7 +24,6 @@ describe("GitHubIssuesContentRepository", () => {
     } satisfies Pick<GitHubIssueClient, "listIssues">;
     const repository = new GitHubIssuesContentRepository({
       client,
-      defaultOgImage: "/og-default.png",
     });
 
     const posts = await repository.listPosts();

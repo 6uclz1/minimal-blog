@@ -48,6 +48,7 @@ export const fixturePosts: Post[] = [
     pinned: false,
     hidden: false,
     noindex: false,
+    ogImage: "/og/custom-fixture.png",
     publishedAt: new Date("2026-04-29T00:00:00.000Z"),
     updatedAt: new Date("2026-04-29T00:00:00.000Z"),
     author: "6uclz1",
